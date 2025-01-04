@@ -13,11 +13,13 @@ import { LockFilled, LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Logo } from "../../components/icons/Logo";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { ICredentials } from "../../types";
-import { login, self } from "../../http/api";
+import { login, self, logoutApi } from "../../http/api";
 import { useAuthStore } from "../../store";
+import { usePermission } from "../../../hooks/usePermission";
 
 export const LoginPage = () => {
-  const { setUser } = useAuthStore();
+  const { isAllowed } = usePermission();
+  const { setUser, logout } = useAuthStore();
   const loginUser = async (userData: ICredentials) => {
     const user = await login(userData);
 
@@ -39,6 +41,13 @@ export const LoginPage = () => {
     mutationFn: loginUser,
     onSuccess: async () => {
       await refetch();
+      if (!isAllowed(selfData)) {
+        logout();
+        logoutApi();
+        return;
+      }
+
+      console.log(selfData);
       setUser(selfData);
     },
   });
