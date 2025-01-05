@@ -16,20 +16,20 @@ import { ICredentials } from "../../types";
 import { login, self, logoutApi } from "../../http/api";
 import { useAuthStore } from "../../store";
 import { usePermission } from "../../hooks/usePermission";
+const getSelf = async () => {
+  const { data } = await self();
 
+  return data.data;
+};
+const loginUser = async (userData: ICredentials) => {
+  const user = await login(userData);
+  console.log(user);
+  return user;
+};
 export const LoginPage = () => {
   const { isAllowed } = usePermission();
   const { setUser, logout } = useAuthStore();
-  const loginUser = async (userData: ICredentials) => {
-    const user = await login(userData);
 
-    return user;
-  };
-  const getSelf = async () => {
-    const { data } = await self();
-
-    return data.data;
-  };
   const { mutate: logoutMutate } = useMutation({
     mutationKey: ["logout"],
     mutationFn: async () => {
@@ -55,8 +55,6 @@ export const LoginPage = () => {
         logoutMutate();
         return;
       }
-
-      console.log(selfData);
       setUser(selfData);
     },
   });
