@@ -29,23 +29,21 @@ const loginUser = async (userData: ICredentials) => {
 export const LoginPage = () => {
   const { isAllowed } = usePermission();
   const { setUser, logout } = useAuthStore();
-
-  const { mutate: logoutMutate } = useMutation({
-    mutationKey: ["logout"],
-    mutationFn: async () => {
-      logout();
-    },
-    onSuccess: async () => {
-      await logoutApi();
-      return;
-    },
-  });
   const { data: selfData, refetch } = useQuery({
     queryKey: ["self"],
     queryFn: getSelf,
     retry: 1,
     enabled: false,
   });
+  const { mutate: logoutMutate } = useMutation({
+    mutationKey: ["logout"],
+    mutationFn: logoutApi,
+    onSuccess: async () => {
+      logout();
+      return;
+    },
+  });
+
   const { mutate, isPending, isError } = useMutation({
     mutationKey: ["login"],
     mutationFn: loginUser,
