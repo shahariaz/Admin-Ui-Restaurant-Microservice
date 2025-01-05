@@ -3,6 +3,7 @@ import { HomePage } from "./pages/home/HomePage";
 import { LoginPage } from "./pages/login/login";
 import { Dashboard } from "./layouts/Dashboard";
 import { NonAuth } from "./layouts/NonAuth";
+import { Catagories } from "./pages/catagories/Catagories";
 
 export const router = createBrowserRouter([
   {
@@ -12,6 +13,10 @@ export const router = createBrowserRouter([
       {
         path: "",
         element: <HomePage />,
+      },
+      {
+        path: "/categories",
+        element: <Catagories />,
       },
     ],
   },
