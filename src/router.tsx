@@ -3,8 +3,12 @@ import { HomePage } from "./pages/home/HomePage";
 import { LoginPage } from "./pages/login/login";
 import { Dashboard } from "./layouts/Dashboard";
 import { NonAuth } from "./layouts/NonAuth";
-import { Catagories } from "./pages/catagories/Catagories";
+
 import { Root } from "./layouts/Root";
+import { Users } from "./pages/users/Users";
+import { Products } from "./pages/Products/Products";
+import { Resturent } from "./pages/restaurant/Restaurant";
+import { Promos } from "./pages/promos/Promos";
 
 export const router = createBrowserRouter([
   {
@@ -20,8 +24,20 @@ export const router = createBrowserRouter([
             element: <HomePage />,
           },
           {
-            path: "/categories",
-            element: <Catagories />,
+            path: "/users",
+            element: <Users />,
+          },
+          {
+            path: "/products",
+            element: <Products />,
+          },
+          {
+            path: "/restaurant",
+            element: <Resturent />,
+          },
+          {
+            path: "/promos",
+            element: <Promos />,
           },
         ],
       },

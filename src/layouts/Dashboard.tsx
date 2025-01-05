@@ -2,36 +2,47 @@ import { Navigate, NavLink, Outlet } from "react-router-dom";
 import { useAuthStore } from "../store";
 
 import { Layout, Menu, theme } from "antd";
-import { HomeOutlined, UserOutlined } from "@ant-design/icons";
+import Icon from "@ant-design/icons";
 import { useState } from "react";
 import { Logo } from "../components/icons/Logo";
+import Home from "../components/icons/Home";
+import UserIcon from "../components/icons/UserIcon";
+import { foodIcon } from "../components/icons/FoodIcon";
+import BasketIcon from "../components/icons/BasketIcon";
+import GiftIcon from "../components/icons/GiftIcon";
+import { BarChartIcon } from "../components/icons/BarChart";
 
 const { Sider, Header, Content, Footer } = Layout;
 
 const items = [
   {
     key: "/",
-    icon: <HomeOutlined />,
+    icon: <Icon component={Home} />,
     label: <NavLink to='/'>Home</NavLink>,
   },
   {
     key: "/users",
-    icon: <UserOutlined />,
+    icon: <Icon component={UserIcon} />,
     label: <NavLink to='/users'>Users</NavLink>,
   },
   {
-    key: "/resturements",
-    icon: <UserOutlined />,
-    label: <NavLink to='/resturements'>Resturements</NavLink>,
+    key: "/restaurant",
+    icon: <Icon component={foodIcon} />,
+    label: <NavLink to='/restaurant'>Restaurant</NavLink>,
   },
   {
     key: "/products",
-    icon: <UserOutlined />,
+    icon: <Icon component={BasketIcon} />,
     label: <NavLink to='/products'>Products</NavLink>,
   },
   {
+    key: "/sales",
+    icon: <Icon component={BarChartIcon} />,
+    label: <NavLink to='/products'>Sales</NavLink>,
+  },
+  {
     key: "/promos",
-    icon: <UserOutlined />,
+    icon: <Icon component={GiftIcon} />,
     label: <NavLink to='/promos'>Promos</NavLink>,
   },
 ];
