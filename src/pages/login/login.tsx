@@ -15,7 +15,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { ICredentials } from "../../types";
 import { login, self, logoutApi } from "../../http/api";
 import { useAuthStore } from "../../store";
-import { usePermission } from "../../../hooks/usePermission";
+import { usePermission } from "../../hooks/usePermission";
 
 export const LoginPage = () => {
   const { isAllowed } = usePermission();
@@ -30,6 +30,16 @@ export const LoginPage = () => {
 
     return data.data;
   };
+  const { mutate: logoutMutate } = useMutation({
+    mutationKey: ["logout"],
+    mutationFn: async () => {
+      logout();
+    },
+    onSuccess: async () => {
+      await logoutApi();
+      return;
+    },
+  });
   const { data: selfData, refetch } = useQuery({
     queryKey: ["self"],
     queryFn: getSelf,
@@ -42,8 +52,7 @@ export const LoginPage = () => {
     onSuccess: async () => {
       await refetch();
       if (!isAllowed(selfData)) {
-        logout();
-        logoutApi();
+        logoutMutate();
         return;
       }
 
