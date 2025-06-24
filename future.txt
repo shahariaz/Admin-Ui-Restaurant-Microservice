@@ -1,0 +1,2 @@
+1> Fixed UI error and make it pixel perfect
+2> Recycle some code...like logout  mutaion into hook...it used in both login and dashbord page
