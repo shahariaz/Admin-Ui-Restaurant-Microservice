@@ -1,9 +1,10 @@
 import { Breadcrumb, Space, Table } from "antd";
 import { RightOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getUsers } from "../../http/api";
 import { IUser } from "../../types";
+import { useAuthStore } from "../../store";
 const getData = async () => {
   const { data } = await getUsers();
   return data.data;
@@ -40,6 +41,7 @@ const columns = [
 ];
 
 export const Users = () => {
+  const { user } = useAuthStore();
   const {
     data: users,
     isLoading,
@@ -49,6 +51,10 @@ export const Users = () => {
     queryKey: ["users"],
     queryFn: getData,
   });
+
+  if (user?.role !== "admin") {
+    return <Navigate to='/' replace={true} />;
+  }
   return (
     <>
       <Space direction='vertical' size='large' style={{ width: "100%" }}>
