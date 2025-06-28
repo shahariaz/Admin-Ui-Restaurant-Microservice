@@ -45,7 +45,7 @@ const getMenuItems = (role: string) => {
     {
       key: "/sales",
       icon: <Icon component={BarChartIcon} />,
-      label: <NavLink to='/products'>Sales</NavLink>,
+      label: <NavLink to='/sales'>Sales</NavLink>,
     },
     {
       key: "/promos",

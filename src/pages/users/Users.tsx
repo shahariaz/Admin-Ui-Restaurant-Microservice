@@ -66,8 +66,8 @@ export const Users = () => {
 
         {isLoading && <div>Loading...</div>}
         {isError && <div>{error.message}</div>}
-        <UsersFilters />
-        <Table columns={columns} dataSource={users} />
+        <UsersFilters onFilterChange={() => {}} />
+        <Table columns={columns} dataSource={users} rowKey={"id"} />
       </Space>
     </>
   );
