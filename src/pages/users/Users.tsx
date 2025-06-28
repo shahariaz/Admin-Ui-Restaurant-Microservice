@@ -7,7 +7,7 @@ import { IUser } from "../../types";
 import { useAuthStore } from "../../store";
 import UsersFilters from "./UsersFilters";
 import { useState } from "react";
-import UserForm from "./forms/UserForm";
+import { UserForm } from "./forms/UserForm";
 const getData = async () => {
   const { data } = await getUsers();
   return data.data;
