@@ -14,20 +14,6 @@ export const UserForm = () => {
   return (
     <Row>
       <Col span={24}>
-        <Card title='Basic info' bordered={false}>
-          <Row gutter={20}>
-            <Col span={12}>
-              <Form.Item label='First name' name='firstName'>
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item label='Last name' name='lastName'>
-                <Input />
-              </Form.Item>
-            </Col>
-          </Row>
-        </Card>
         <Space direction='vertical' size='large'>
           <Card title='Basic info' bordered={false}>
             <Row gutter={20}>
@@ -42,7 +28,20 @@ export const UserForm = () => {
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label='Email' name='email'>
+                <Form.Item
+                  label='Email'
+                  name='email'
+                  rules={[
+                    {
+                      type: "email",
+                      message: "The input is not valid E-mail!",
+                    },
+                    {
+                      required: true,
+                      message: "Please input your E-mail!",
+                    },
+                  ]}
+                >
                   <Input size='large' />
                 </Form.Item>
               </Col>
@@ -52,7 +51,20 @@ export const UserForm = () => {
           <Card title='Security info' bordered={false}>
             <Row gutter={20}>
               <Col span={12}>
-                <Form.Item label='Passoword' name='password'>
+                <Form.Item
+                  label='Passoword'
+                  name='password'
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your password!",
+                    },
+                    {
+                      min: 6,
+                      message: "Password must be at least 6 characters long",
+                    },
+                  ]}
+                >
                   <Input size='large' type='password' />
                 </Form.Item>
               </Col>
@@ -62,7 +74,16 @@ export const UserForm = () => {
           <Card title='Role' bordered={false}>
             <Row gutter={20}>
               <Col span={12}>
-                <Form.Item label='Role' name='role'>
+                <Form.Item
+                  label='Role'
+                  name='role'
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please select a role!",
+                    },
+                  ]}
+                >
                   <Select
                     size='large'
                     style={{ width: "100%" }}
@@ -77,7 +98,16 @@ export const UserForm = () => {
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label='Restaurant' name='tenantId'>
+                <Form.Item
+                  label='Restaurant'
+                  name='tenantId'
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please select a restaurant!",
+                    },
+                  ]}
+                >
                   <Select
                     size='large'
                     style={{ width: "100%" }}
