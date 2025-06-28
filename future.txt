@@ -1,3 +1,7 @@
 1> Fixed UI error and make it pixel perfect
 2> Recycle some code...like logout  mutaion into hook...it used in both login and dashbord page
 3> Add status to user like actie,banned etc..have to implement in backend
+
+
+
+H.W  ==>> Crate Tanent same as  User 
