@@ -8,6 +8,7 @@ import { useAuthStore } from "../../store";
 import UsersFilters from "./UsersFilters";
 import { useState } from "react";
 import { UserForm } from "./forms/UserForm";
+import { J } from "vitest/dist/chunks/reporters.D7Jzd9GS.js";
 const getData = async () => {
   const { data } = await getUsers();
   return data.data;
@@ -44,6 +45,7 @@ const columns = [
 ];
 
 export const Users = () => {
+  const [form] = Form.useForm();
   const {
     token: { colorBgLayout },
   } = theme.useToken();
@@ -62,6 +64,9 @@ export const Users = () => {
   if (user?.role !== "admin") {
     return <Navigate to='/' replace={true} />;
   }
+  const onHandleSubmit = () => {
+    console.log("From values", form.getFieldsValue());
+  };
 
   return (
     <>
@@ -92,12 +97,14 @@ export const Users = () => {
           extra={
             <Space>
               <Button>Cancle</Button>
-              <Button type='primary'>Submit</Button>
+              <Button type='primary' onClick={onHandleSubmit}>
+                Submit
+              </Button>
             </Space>
           }
           styles={{ body: { backgroundColor: colorBgLayout } }}
         >
-          <Form layout='vertical'>
+          <Form layout='vertical' form={form} size='large'>
             <UserForm />
           </Form>
         </Drawer>

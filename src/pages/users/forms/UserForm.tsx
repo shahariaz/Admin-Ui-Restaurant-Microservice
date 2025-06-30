@@ -116,7 +116,7 @@ export const UserForm = () => {
                     placeholder='Select restaurant'
                   >
                     {tenants?.map((tenant: Tenant) => (
-                      <Select.Option value={tenant.id}>
+                      <Select.Option value={tenant.id} key={tenant.id}>
                         {tenant.name}
                       </Select.Option>
                     ))}

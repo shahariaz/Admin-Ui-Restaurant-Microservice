@@ -5,6 +5,5 @@
 
 In User Create from we have  to  implement  search  funtionality into select Resturant option..we also have to  made a end point  in backend to do so...like backend for searching resturant by query like name
 
-
-
+have  to make full ui responsive 
 Crate Tanent same as  User 
