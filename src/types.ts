@@ -7,6 +7,7 @@ export interface IUser {
   firstName?: string;
   lastName?: string;
   role?: string;
+  tenantId?:number;
   email?: string;
   created_at?: string;
   updated_at?: string;
