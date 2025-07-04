@@ -8,10 +8,8 @@ import { useAuthStore } from "../../store";
 import UsersFilters from "./UsersFilters";
 import { useState } from "react";
 import { UserForm } from "./forms/UserForm";
-const getData = async () => {
-  const { data } = await getUsers();
-  return data.data;
-};
+import { PER_PAGE } from "../../constants/constants";
+
 
 const columns = [
   {
@@ -50,6 +48,10 @@ export const Users = () => {
     token: { colorBgLayout },
   } = theme.useToken();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [queryParams, setQueryParams] = useState({
+    perPage:PER_PAGE,
+    currentPage:1,
+  })
   const { user } = useAuthStore();
   const {
     data: users,
@@ -57,9 +59,14 @@ export const Users = () => {
     isError,
     error,
   } = useQuery({
-    queryKey: ["users"],
-    queryFn: getData,
+    queryKey: ["users",queryParams],
+    queryFn:  ()=>{
+        const queryString = new URLSearchParams(queryParams as unknown as  Record<string,string>).toString();
+         return  getUsers(queryString).then((res)=> res.data);
+    },
+    
   });
+
  const  {mutate:userMutate} = useMutation({
     mutationKey:['create-user'],
     mutationFn:async(data:IUser)=> createUser(data),
@@ -100,7 +107,24 @@ export const Users = () => {
             Add User
           </Button>
         </UsersFilters>
-        <Table columns={columns} dataSource={users} rowKey={"id"} />
+        <Table 
+        columns={columns} 
+        dataSource={users?.data?.data}
+         rowKey={"id"} 
+         pagination={{
+          total: users?.data?.total,
+          pageSize: queryParams.perPage,
+          current: queryParams.currentPage,
+          onChange: (page) => {
+            setQueryParams((prev)=>{
+              return{
+                ...prev,
+                currentPage: page,
+              }
+            });
+          },
+         }}
+         />
         <Drawer
           title='Create  user'
           width={720}
