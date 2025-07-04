@@ -1,7 +1,7 @@
-import { Breadcrumb, Button, Drawer, Form, Space, Table, theme } from "antd";
-import { PlusOutlined, RightOutlined } from "@ant-design/icons";
+import { Breadcrumb, Button, Drawer, Flex, Form, Space, Spin, Table, theme } from "antd";
+import { PlusOutlined, RightOutlined,LoadingOutlined } from "@ant-design/icons";
 import { Link, Navigate } from "react-router-dom";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createUser, getUsers } from "../../http/api";
 import { IUser } from "../../types";
 import { useAuthStore } from "../../store";
@@ -55,15 +55,17 @@ export const Users = () => {
   const { user } = useAuthStore();
   const {
     data: users,
-    isLoading,
+    isFetching,
     isError,
     error,
   } = useQuery({
     queryKey: ["users",queryParams],
-    queryFn:  ()=>{
+    queryFn: async ()=>{
         const queryString = new URLSearchParams(queryParams as unknown as  Record<string,string>).toString();
          return  getUsers(queryString).then((res)=> res.data);
     },
+    placeholderData: keepPreviousData
+   
     
   });
 
@@ -91,13 +93,17 @@ export const Users = () => {
   return (
     <>
       <Space direction='vertical' size='large' style={{ width: "100%" }}>
-        <Breadcrumb
+       <Flex justify="space-between">
+         <Breadcrumb
           separator={<RightOutlined />}
           items={[{ title: <Link to='/'>Dashboard</Link> }, { title: "Users" }]}
         />
 
-        {isLoading && <div>Loading...</div>}
+        {isFetching && (
+          <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+        )}
         {isError && <div>{error.message}</div>}
+       </Flex>
         <UsersFilters onFilterChange={() => {}}>
           <Button
             type='primary'
